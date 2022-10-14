@@ -84,3 +84,30 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 }
+
+// generate password function
+function generatePassword() {
+
+  // to continue generating a random password using the characters in the totalPossible array until the password matches the criteria based on what was received via the prompt and confirmation boxes
+  do {
+    var getPasswordArray = [];
+    var getPassword = "";
+    var passwordLength = lengthPwd;
+
+    for (var i = 0; i < passwordLength; i++) {
+      var numSelected = Math.floor(Math.random() * totalPossible.length);
+      getPasswordArray.push(totalPossible[numSelected]);
+
+      getPassword = getPasswordArray.join("");
+    };
+  }
+
+  while (
+    ((lowercase && getPassword.match(/[a-z]/) == null) || (uppercase && getPassword.match(/[A-Z]/) == null) || (numeric && getPassword.match(/[0-9]/) == null) || (special && ((passwordLength - (Array.from(getPassword.matchAll(/[a-z]/g)).length + Array.from(getPassword.matchAll(/[A-Z]/g)).length + Array.from(getPassword.matchAll(/[0-9]/g)).length)) <= 0)))
+  );
+
+  return getPassword;
+}
+
+// event listener
+generateBtn.addEventListener("click", writePassword);
